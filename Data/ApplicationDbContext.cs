@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using superHeroGruppuppgift.Models;
 
 namespace superHeroGruppuppgift.Data
 {
@@ -9,5 +10,10 @@ namespace superHeroGruppuppgift.Data
             : base(options)
         {
         }
+
+        public DbSet<superHeros> superHeros { get; set; }
+
+        public DbSet<superHeroTeam> superHeroTeam { get; set; }
+
     }
 }
