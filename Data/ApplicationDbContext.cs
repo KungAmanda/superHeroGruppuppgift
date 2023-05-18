@@ -6,6 +6,8 @@ namespace superHeroGruppuppgift.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
+        internal object superHeroTeams;
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -14,6 +16,8 @@ namespace superHeroGruppuppgift.Data
         public DbSet<superHeros> superHeros { get; set; }
 
         public DbSet<superHeroTeam> superHeroTeam { get; set; }
+
+      
 
     }
 }
