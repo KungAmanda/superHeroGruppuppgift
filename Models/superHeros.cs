@@ -17,7 +17,7 @@ namespace superHeroGruppuppgift.Models
         [Required]
         public string Superpower { get; set;}
 
-        public superHeroTeam superHeroTeam { get; set; }
+        public superHeroTeam? superHeroTeam { get; set; }
 
 
     }

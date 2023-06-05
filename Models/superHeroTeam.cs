@@ -10,6 +10,6 @@ namespace superHeroGruppuppgift.Models
         [Required]
         public string Headquarters { get; set; }
 
-        public ICollection<superHeros> superHeros { get; set; }
+        public ICollection<superHeros>? superHeros { get; set; }
     }
 }
