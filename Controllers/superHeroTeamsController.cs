@@ -8,35 +8,55 @@ using Microsoft.EntityFrameworkCore;
 using superHeroGruppuppgift.Data;
 using superHeroGruppuppgift.Models;
 
-
 namespace superHeroGruppuppgift.Controllers
 {
-    public class SuperHeroTeamController : Controller
+    public class superHeroTeamsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-
-
-        public SuperHeroTeamController(ApplicationDbContext context)
+        public superHeroTeamsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-
-
-        // Metod för att visa en lista över alla sparade objekt
+        // GET: superHeroTeams
         public async Task<IActionResult> Index()
         {
-            var superHeroTeam = await _context.superHeroTeam.ToListAsync();
+              return _context.superHeroTeam != null ? 
+                          View(await _context.superHeroTeam.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.superHeroTeam'  is null.");
+        }
+
+        // GET: superHeroTeams/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null || _context.superHeroTeam == null)
+            {
+                return NotFound();
+            }
+
+            var superHeroTeam = await _context.superHeroTeam
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (superHeroTeam == null)
+            {
+                return NotFound();
+            }
+
             return View(superHeroTeam);
         }
 
+        // GET: superHeroTeams/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-
-        // Metod för att lägga till ett nytt objekt i databasen
+        // POST: superHeroTeams/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Headquarters,members")] superHeroTeam superHeroTeam)
+        public async Task<IActionResult> Create([Bind("Id,Name,Headquarters")] superHeroTeam superHeroTeam)
         {
             if (ModelState.IsValid)
             {
@@ -45,6 +65,99 @@ namespace superHeroGruppuppgift.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(superHeroTeam);
+        }
+
+        // GET: superHeroTeams/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null || _context.superHeroTeam == null)
+            {
+                return NotFound();
+            }
+
+            var superHeroTeam = await _context.superHeroTeam.FindAsync(id);
+            if (superHeroTeam == null)
+            {
+                return NotFound();
+            }
+            return View(superHeroTeam);
+        }
+
+        // POST: superHeroTeams/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Headquarters")] superHeroTeam superHeroTeam)
+        {
+            if (id != superHeroTeam.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(superHeroTeam);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!superHeroTeamExists(superHeroTeam.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(superHeroTeam);
+        }
+
+        // GET: superHeroTeams/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null || _context.superHeroTeam == null)
+            {
+                return NotFound();
+            }
+
+            var superHeroTeam = await _context.superHeroTeam
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (superHeroTeam == null)
+            {
+                return NotFound();
+            }
+
+            return View(superHeroTeam);
+        }
+
+        // POST: superHeroTeams/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            if (_context.superHeroTeam == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.superHeroTeam'  is null.");
+            }
+            var superHeroTeam = await _context.superHeroTeam.FindAsync(id);
+            if (superHeroTeam != null)
+            {
+                _context.superHeroTeam.Remove(superHeroTeam);
+            }
+            
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool superHeroTeamExists(int id)
+        {
+          return (_context.superHeroTeam?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

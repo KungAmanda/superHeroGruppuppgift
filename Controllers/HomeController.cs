@@ -20,11 +20,15 @@ namespace superHeroGruppuppgift.Controllers
 
         public IActionResult Index()
         {
-            var superHeros = _context.superHeros.ToList();
-            return View("~/Views/SuperHeros/Index.cshtml", superHeros);
+            
+            return View();
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+        public IActionResult About()
         {
             return View();
         }

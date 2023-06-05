@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using superHeroGruppuppgift.Data;
 
 #nullable disable
 
-namespace superHeroGruppuppgift.Data.Migrations
+namespace superHeroGruppuppgift.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230601141321_senaste")]
+    partial class Senaste
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -269,7 +272,7 @@ namespace superHeroGruppuppgift.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("superHeroTeamId")
+                    b.Property<int>("superHeroTeamId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -332,14 +335,18 @@ namespace superHeroGruppuppgift.Data.Migrations
 
             modelBuilder.Entity("superHeroGruppuppgift.Models.superHeros", b =>
                 {
-                    b.HasOne("superHeroGruppuppgift.Models.superHeroTeam", null)
-                        .WithMany("members")
-                        .HasForeignKey("superHeroTeamId");
+                    b.HasOne("superHeroGruppuppgift.Models.superHeroTeam", "superHeroTeam")
+                        .WithMany("superHeros")
+                        .HasForeignKey("superHeroTeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("superHeroTeam");
                 });
 
             modelBuilder.Entity("superHeroGruppuppgift.Models.superHeroTeam", b =>
                 {
-                    b.Navigation("members");
+                    b.Navigation("superHeros");
                 });
 #pragma warning restore 612, 618
         }

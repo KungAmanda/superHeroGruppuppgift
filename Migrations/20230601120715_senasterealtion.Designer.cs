@@ -9,11 +9,11 @@ using superHeroGruppuppgift.Data;
 
 #nullable disable
 
-namespace superHeroGruppuppgift.Data.Migrations
+namespace superHeroGruppuppgift.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230517131514_superHeroM")]
-    partial class superHeroM
+    [Migration("20230601120715_senasterealtion")]
+    partial class Senasterealtion
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -227,6 +227,27 @@ namespace superHeroGruppuppgift.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("superHeroGruppuppgift.Models.superHeroTeam", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Headquarters")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("superHeroTeam");
+                });
+
             modelBuilder.Entity("superHeroGruppuppgift.Models.superHeros", b =>
                 {
                     b.Property<int>("Id")
@@ -251,7 +272,12 @@ namespace superHeroGruppuppgift.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("superHeroTeamId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("superHeroTeamId");
 
                     b.ToTable("superHeros");
                 });
@@ -305,6 +331,22 @@ namespace superHeroGruppuppgift.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("superHeroGruppuppgift.Models.superHeros", b =>
+                {
+                    b.HasOne("superHeroGruppuppgift.Models.superHeroTeam", "superHeroTeam")
+                        .WithMany("superHeros")
+                        .HasForeignKey("superHeroTeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("superHeroTeam");
+                });
+
+            modelBuilder.Entity("superHeroGruppuppgift.Models.superHeroTeam", b =>
+                {
+                    b.Navigation("superHeros");
                 });
 #pragma warning restore 612, 618
         }

@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace superHeroGruppuppgift.Data.Migrations
+namespace superHeroGruppuppgift.Migrations
 {
     /// <inheritdoc />
-    public partial class Test : Migration
+    public partial class Senaste : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

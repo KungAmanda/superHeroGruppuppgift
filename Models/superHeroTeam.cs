@@ -9,7 +9,7 @@ namespace superHeroGruppuppgift.Models
         public string Name { get; set; }
         [Required]
         public string Headquarters { get; set; }
-        [Required]
-        public ICollection<superHeros> members { get; set; }
+
+        public ICollection<superHeros> superHeros { get; set; }
     }
 }
