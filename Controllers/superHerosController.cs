@@ -20,15 +20,28 @@ namespace superHeroGruppuppgift.Controllers
         }
 
         // GET: superHeros
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchString)
         {
-              return _context.superHeros != null ? 
-                          View(await _context.superHeros.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.superHeros'  is null.");
+
+            // return _context.superHeros != null ? 
+            //View(await _context.superHeros.ToListAsync()) :
+             Problem("Entity set 'ApplicationDbContext.superHeros'  is null.");
+            ViewData["CurrentFilter"] = SearchString;
+            var superHeros = from b in _context.superHeros select b;
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                superHeros = superHeros.Where(b => b.Name.Contains(SearchString));
+            }
+            return View(superHeros);
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                superHeros = superHeros.Where(b => b.Lastname.Contains(SearchString));
+            }
+            return View(superHeros);
         }
 
-        // GET: superHeros/Details/5
-        public async Task<IActionResult> Details(int? id)
+    // GET: superHeros/Details/5
+    public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.superHeros == null)
             {

@@ -5,6 +5,7 @@ namespace superHeroGruppuppgift.Models
 {
     public class superHeros
     {
+
         // här lägger vi attribut för superhjältarna som kommer ligga i tabellen sen
        [Key]
         public int Id { get; set; }
@@ -19,6 +20,11 @@ namespace superHeroGruppuppgift.Models
 
         public superHeroTeam? superHeroTeam { get; set; }
 
-
+       
+        /*internal object Where(Func<object, bool> value)
+        {
+            throw new NotImplementedException();
+        }
+        */
     }
 }

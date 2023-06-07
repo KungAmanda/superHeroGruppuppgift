@@ -20,4 +20,12 @@
     <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\Content\fyhI.gif" />
+    <None Include="wwwroot\Content\Picture1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\Content\super.gif" />
+  </ItemGroup>
+
 </Project>
